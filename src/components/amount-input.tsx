@@ -8,7 +8,7 @@ function AmountInput({ amount, onChange }: AmountInput) {
 		<div className="flex items-center">
 			<span className="text-3xl text-white font-bold">$</span>
 			<input
-				className="no-spinner bg-transparent text-center text-5xl font-bold outline-none border-none p-4 caret-blue-500 transition-all"
+				className="no-spinner bg-transparent text-white text-center text-5xl font-bold outline-none border-none p-4 caret-blue-500 transition-all"
 				type="number"
 				inputMode="decimal"
 				step="0.01"

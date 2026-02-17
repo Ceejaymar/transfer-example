@@ -3,6 +3,8 @@ import express from 'express';
 const app = express();
 const PORT = 3001;
 
+app.use(express.json());
+
 // GET: Get all accounts
 app.get('/api/accounts', (_req, res) => {
 	res.json({
@@ -39,35 +41,23 @@ app.get('/api/accounts', (_req, res) => {
 });
 
 // GET: Verify external account balance
-app.get('/accounts/external/:id', (req, res) => {
+app.get('/api/accounts/external/:id', (req, res) => {
 	const { id } = req.params;
 
-	res.json({
-		account: {
+	setTimeout(() => {
+		res.json({
+			verified: true,
+			balance: 10000,
 			id,
-			name: 'Account 1',
-			balance: 1000,
-		},
-	});
+		});
+	}, 2000);
 });
 
 // POST: Transfer money between accounts
-app.post('/accounts/transfer', (req, res) => {
-	const { from, to, amount } = req.body;
-
-	if (from.type !== 'INTERNAL' || to.type !== 'INTERNAL') {
-		return res.status(400).json({ message: 'Invalid account type' });
-	}
-
-	if (from.balance < amount) {
-		return res.status(400).json({ message: 'Insufficient balance' });
-	}
-
-	res.json({
-		message: 'Transfer successful',
-		from,
-		to,
-	});
+app.post('/api/transfer', (_req, res) => {
+	setTimeout(() => {
+		res.json({ success: true });
+	}, 1000);
 });
 
 app.listen(PORT, '0.0.0.0', () => {

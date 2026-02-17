@@ -15,3 +15,5 @@ export type AccountIconName =
 	| 'TrendUp'
 	| 'PiggyBank'
 	| 'CreditCard';
+
+export type View = 'FORM' | 'LOADING' | 'SUCCESS';

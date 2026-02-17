@@ -6,13 +6,28 @@ import SelectionItem from './selection-item';
 
 type BottomSheet = PropsWithChildren<{
 	variant?: Variant;
+	selectedName?: string;
+	disabled?: boolean;
 }>;
 
-export default function BottomSheet({ children, variant }: BottomSheet) {
+export default function BottomSheet({
+	children,
+	variant,
+	selectedName,
+	disabled,
+}: BottomSheet) {
 	return (
 		<Drawer.Root>
-			<Drawer.Trigger className="w-full">
-				{variant && <SelectionItem variant={variant} />}
+			<Drawer.Trigger
+				className={`w-full ${disabled ? 'pointer-events-none' : ''}`}
+			>
+				{variant && (
+					<SelectionItem
+						variant={variant}
+						selectedName={selectedName}
+						disabled={disabled}
+					/>
+				)}
 			</Drawer.Trigger>
 			<Drawer.Portal container={document.getElementById('root')}>
 				<Drawer.Overlay className="absolute inset-0 bg-black/40" />
