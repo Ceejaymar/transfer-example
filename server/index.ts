@@ -4,30 +4,35 @@ const app = express();
 const PORT = 3001;
 
 // GET: Get all accounts
-app.get('/accounts', (_req, res) => {
+app.get('/api/accounts', (_req, res) => {
 	res.json({
 		accounts: [
 			{
 				id: 1,
-				name: 'Account 1',
+				name: 'Banking',
 				balance: 1000,
 				type: 'INTERNAL',
+				icon: 'CurrencyDollar',
 			},
 			{
 				id: 2,
-				name: 'Account 2',
-				type: 'EXTERNAL',
+				name: 'Personal Portfolio',
+				balance: 400,
+				type: 'INTERNAL',
+				icon: 'TrendUp',
 			},
 			{
 				id: 3,
-				name: 'Account 3',
-				balance: 400,
-				type: 'INTERNAL',
+				name: 'Savings Account',
+				type: 'EXTERNAL',
+				icon: 'Bank',
 			},
 			{
 				id: 4,
-				name: 'Account 4',
-				type: 'EXTERNAL',
+				name: 'Smart Portfolio',
+				balance: 100,
+				type: 'INTERNAL',
+				icon: 'RocketLaunch',
 			},
 		],
 	});
@@ -43,6 +48,25 @@ app.get('/accounts/external/:id', (req, res) => {
 			name: 'Account 1',
 			balance: 1000,
 		},
+	});
+});
+
+// POST: Transfer money between accounts
+app.post('/accounts/transfer', (req, res) => {
+	const { from, to, amount } = req.body;
+
+	if (from.type !== 'INTERNAL' || to.type !== 'INTERNAL') {
+		return res.status(400).json({ message: 'Invalid account type' });
+	}
+
+	if (from.balance < amount) {
+		return res.status(400).json({ message: 'Insufficient balance' });
+	}
+
+	res.json({
+		message: 'Transfer successful',
+		from,
+		to,
 	});
 });
 
